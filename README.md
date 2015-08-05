@@ -103,7 +103,6 @@ jQuery recommends moving to [npm](https://www.npmjs.com/), using ["jquery-plugin
 jQuery Plugin Boilerplate is based on (https://github.com/jquery-boilerplate/jquery-boilerplate) and adapted to my personal taste.
 
 [![idomusha](https://fr.gravatar.com/userimage/43584317/49cfb592a2054e9c39c5dc195e5ea419.png?size=70)](https://github.com/idomusha)
---- | --- | --- | --- | --- | --- | ---
 [idomusha](https://github.com/idomusha)
 
 jQuery Boilerplate was made with love by these guys and a bunch of awesome [contributors](https://github.com/jquery-boilerplate/boilerplate/graphs/contributors).
