@@ -1,11 +1,3 @@
-/*
- *  jquery-plugin-boilerplate - v3.5.1
- *  A jump-start for jQuery plugins development.
- *  http://jqueryboilerplate.com
- *
- *  Made by Zeno Rocha
- *  Under MIT License
- */
 /**
  * plugin-boilerplate - v0.0.1
  * A jump-start for jQuery plugins development.
@@ -113,10 +105,10 @@
        instantiating element using the $.data method (as explained
        in the plugin wrapper below), we can call methods directly on
        the instance outside of the plugin initalization, ie:
-       $('selector').data('plugin_myPluginName').someOtherFunction();
+       $('selector').data('plugin_defaultPluginName').someOtherFunction();
 
        Consequently, the destroy method can be called using:
-       $('selector').data('plugin_myPluginName').destroy();
+       $('selector').data('plugin_defaultPluginName').destroy();
        */
       this.unbindEvents();
       this.$element.removeData();
@@ -186,7 +178,7 @@
 
     callback: function() {
       // Cache onComplete option
-      var onComplete = this.options.onComplete;
+      var onComplete = this.settings.onComplete;
 
       if (typeof onComplete === 'function') {
         /*
@@ -239,6 +231,8 @@
 
    More: http://learn.jquery.com/plugins/basic-plugin-creation/
    */
+
+   // Prototype function
   $.fn[ pluginName ] = function(options) {
     this.each(function() {
       if (!$.data(this, 'plugin_' + pluginName)) {
@@ -274,7 +268,7 @@
    More: http://learn.jquery.com/plugins/advanced-plugin-concepts/
    */
   $.fn[ pluginName ].defaults = {
-    item: '.item',
+    element: '.item',
     onComplete: null,
     debug: true,
   };

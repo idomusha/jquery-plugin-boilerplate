@@ -2,15 +2,28 @@
 <html>
 	<head>
 		<title>jQuery plugin Boilerplate</title>
+
+		<link href="../dist/plugin.css" rel="stylesheet">
+
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-		<script src="../src/plugin.js"></script>
+		<!--<script src="../dist/plugin-prototype.js"></script>-->
+		<script src="../dist/plugin-simple.js"></script>
 	</head>
 	<body>
 		<button>Call Plugin</button>
 		<script>
 			$(function() {
-				$('button').defaultPluginName({
-					item: ".another",
+
+				// prototype function
+				/*$('button').defaultPluginName({
+					onComplete: function() {
+						alert('Then followup with an awesome callback!');
+					}
+				});*/
+
+				// simple function
+				DefaultPluginName({
+					element: "button",
 					onComplete: function() {
 						alert('Then followup with an awesome callback!');
 					}
