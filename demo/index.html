@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>jQuery plugin Boilerplate</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="../src/plugin.js"></script>
+	</head>
+	<body>
+		<button>Call Plugin</button>
+		<script>
+			$(function() {
+				$('button').defaultPluginName({
+					item: ".another",
+					onComplete: function() {
+						alert('Then followup with an awesome callback!');
+					}
+				});
+			});
+
+
+		</script>
+	</body>
+</html>
