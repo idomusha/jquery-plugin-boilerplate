@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jQuery plugin Boilerplate</title>
+
+	<link href="../dist/plugin.css" rel="stylesheet">
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="../dist/plugin-simple.js"></script>
+</head>
+<body>
+<button>Call Plugin</button>
+<script>
+	$(function() {
+
+		// override defaults for all future instances
+		DefaultPluginName.defaults.element = 'button';
+
+		// simple function
+		DefaultPluginName({
+			onComplete: function() {
+				alert('Then followup with an awesome callback!');
+			},
+			debug: true,
+		});
+
+		//$(window).data('DefaultPluginName').destroy();
+
+	});
+
+
+</script>
+</body>
+</html>

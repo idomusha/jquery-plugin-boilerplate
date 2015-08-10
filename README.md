@@ -100,7 +100,7 @@ jQuery recommends moving to [npm](https://www.npmjs.com/), using ["jquery-plugin
 
 ## Team
 
-jQuery Plugin Boilerplate is based on (https://github.com/jquery-boilerplate/jquery-boilerplate) and adapted to my personal taste.
+jQuery Plugin Boilerplate is based on (https://github.com/johndugan/jquery-plugin-boilerplate) and adapted to my personal taste.
 
 [![idomusha](https://fr.gravatar.com/userimage/43584317/49cfb592a2054e9c39c5dc195e5ea419.png?size=70)](https://github.com/idomusha) |
 --- |
@@ -108,9 +108,9 @@ jQuery Plugin Boilerplate is based on (https://github.com/jquery-boilerplate/jqu
 
 jQuery Boilerplate was made with love by these guys and a bunch of awesome [contributors](https://github.com/jquery-boilerplate/boilerplate/graphs/contributors).
 
-[![Zeno Rocha](http://gravatar.com/avatar/e190023b66e2b8aa73a842b106920c93?s=70)](http://zenorocha.com) | [![Addy Osmani](http://gravatar.com/avatar/96270e4c3e5e9806cf7245475c00b275?s=70)](http://addyosmani.com) | [![Helder Santana](http://gravatar.com/avatar/63fb620ee7d14fc91030d4349d189b3e?s=70)](http://heldr.com)
---- | --- | --- | --- | --- | --- | ---
-[Zeno Rocha](http://zenorocha.com) | [Addy Osmani](http://addyosmani.com) | [Helder Santana](http://heldr.com)
+[![John Dugan](https://avatars2.githubusercontent.com/u/1389303?v=3&s=70)](http://john-dugan.com) | [![Zeno Rocha](http://gravatar.com/avatar/e190023b66e2b8aa73a842b106920c93?s=70)](http://zenorocha.com) | [![Addy Osmani](http://gravatar.com/avatar/96270e4c3e5e9806cf7245475c00b275?s=70)](http://addyosmani.com) | [![Helder Santana](http://gravatar.com/avatar/63fb620ee7d14fc91030d4349d189b3e?s=70)](http://heldr.com)
+--- | --- | --- | --- | --- | --- | --- | --- | ---
+[John Dugan](http://john-dugan.com) | [Zeno Rocha](http://zenorocha.com) | [Addy Osmani](http://addyosmani.com) | [Helder Santana](http://heldr.com)
 
 ## Contributing
 

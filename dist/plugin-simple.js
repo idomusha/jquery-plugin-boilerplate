@@ -29,6 +29,7 @@
  */
 ;
 (function($, window, document, undefined) {
+  'use strict';
 
   /*
    Store the name of the plugin in the "pluginName" variable. This
@@ -37,8 +38,8 @@
 
    More: http://api.jquery.com/jquery.data/
    */
-  var pluginName = 'defaultPluginName';
-  var debug = true;
+  var pluginName = 'DefaultPluginName';
+  var debug;
 
   /*
    The "Plugin" constructor, builds a new instance of the plugin for the
@@ -62,9 +63,11 @@
 
      More: http://api.jquery.com/jquery.extend/
      */
-    this._defaults = $.fn[ pluginName ].defaults;
-    if (debug) console.log('defaults', this._defaults);
+    this._defaults = window[ pluginName ].defaults;
     this.settings = $.extend({}, this._defaults, options);
+
+    debug = this.settings.debug;
+    if (debug) console.log('defaults', this._defaults);
     if (debug) console.log('settings', this.settings);
 
     /*
@@ -118,7 +121,7 @@
        $('selector').data('plugin_defaultPluginName').destroy();
        */
       this.unbindEvents();
-      this.$element.removeData();
+      this.window.removeData();
     },
 
     // Cache DOM nodes for performance
@@ -129,13 +132,14 @@
        will cache a jQuery reference to the element that initialized
        the plugin. Cached variables can then be used in other methods.
        */
+      this.window = $(window);
       this.$element = Private.define(this.settings.element);
-      if (debug) console.log('$element',this.$element);
+      if (debug) console.log('$element', this.$element);
     },
 
     // Bind events that trigger methods
     bindEvents: function() {
-      var plugin = this;
+      var _this = this;
 
       /*
        Bind event(s) to handlers that trigger other functions, ie:
@@ -147,7 +151,7 @@
        This allows us to unbind plugin-specific events using the
        unbindEvents method below.
        */
-      plugin.$element.on('click' + '.' + plugin._name, function() {
+      _this.$element.on('click' + '.' + _this._name, function() {
         /*
          Use the "call" method so that inside of the method being
          called, ie: "someOtherFunction", the "this" keyword refers
@@ -155,7 +159,7 @@
 
          More: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call
          */
-        plugin.someOtherFunction.call(plugin);
+        _this.someOtherFunction.call(_this);
       });
     },
 
@@ -179,7 +183,7 @@
      */
 
     // Create custom methods
-    someOtherFunction: function() {
+    someOtherFunction: function(width, callback) {
       alert('I promise to do something cool!');
       this.callback();
     },
@@ -224,6 +228,7 @@
       else if ((typeof o === 'string') /*&& ((o.charAt(0) == '#') || (o.charAt(0) == '.'))*/) {
         $returnObject = $(o);
       }
+
       return $returnObject;
     },
 
@@ -236,32 +241,11 @@
    More: http://learn.jquery.com/plugins/basic-plugin-creation/
    */
 
-  // Prototype function
-  $.fn[ pluginName ] = function(options) {
-    this.each(function() {
-      if (!$.data(this, 'plugin_' + pluginName)) {
-        /*
-         Use "$.data" to save each instance of the plugin in case
-         the user wants to modify it. Using "$.data" in this way
-         ensures the data is removed when the DOM element(s) are
-         removed via jQuery methods, as well as when the userleaves
-         the page. It's a smart way to prevent memory leaks.
-
-         More: http://api.jquery.com/jquery.data/
-         */
-        $.data(this, 'plugin_' + pluginName, new Plugin(this, options));
-      }
-    });
-    /*
-     "return this;" returns the original jQuery object. This allows
-     additional jQuery methods to be chained.
-     */
-    return this;
-  };
-
   // Simple function
-  var Instance = function(options) {
-    new Plugin(options);
+  window[ pluginName ] =  function(options) {
+    if (!$.data(window, pluginName)) {
+      $.data(window, pluginName, new Plugin(options));
+    }
   };
 
   /*
@@ -271,18 +255,14 @@
 
    For example, the user could set the "property" value once for all
    instances of the plugin with
-   "$.fn.pluginName.defaults.property = 'myValue';". Then, every time
+   "DefaultPluginName.defaults.property = 'myValue';". Then, every time
    plugin is initialized, "property" will be set to "myValue".
 
    More: http://learn.jquery.com/plugins/advanced-plugin-concepts/
    */
-  $.fn[ pluginName ].defaults = {
+  window[ pluginName ].defaults = {
     element: '.item',
     onComplete: null,
-    debug: true,
   };
-
-
-  window[ pluginName.charAt(0).toUpperCase() + pluginName.substring(1) ] = Instance;
 
 })(jQuery, window, document);

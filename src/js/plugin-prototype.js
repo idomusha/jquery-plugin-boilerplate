@@ -127,7 +127,7 @@
 
     // Bind events that trigger methods
     bindEvents: function() {
-      var plugin = this;
+      var _this = this;
 
       /*
        Bind event(s) to handlers that trigger other functions, ie:
@@ -139,7 +139,7 @@
        This allows us to unbind plugin-specific events using the
        unbindEvents method below.
        */
-      plugin.$element.on('click' + '.' + plugin._name, function() {
+      _this.$element.on('click' + '.' + _this._name, function() {
         /*
          Use the "call" method so that inside of the method being
          called, ie: "someOtherFunction", the "this" keyword refers
@@ -147,7 +147,7 @@
 
          More: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call
          */
-        plugin.someOtherFunction.call(plugin);
+        _this.someOtherFunction.call(_this);
       });
     },
 
@@ -218,6 +218,7 @@
       else if ((typeof o === 'string') /*&& ((o.charAt(0) == '#') || (o.charAt(0) == '.'))*/) {
         $returnObject = $(o);
       }
+
       console.log(o);
       console.log($returnObject);
       return $returnObject;
@@ -232,27 +233,66 @@
    More: http://learn.jquery.com/plugins/basic-plugin-creation/
    */
 
-   // Prototype function
-  $.fn[ pluginName ] = function(options) {
-    this.each(function() {
-      if (!$.data(this, 'plugin_' + pluginName)) {
-        /*
-         Use "$.data" to save each instance of the plugin in case
-         the user wants to modify it. Using "$.data" in this way
-         ensures the data is removed when the DOM element(s) are
-         removed via jQuery methods, as well as when the userleaves
-         the page. It's a smart way to prevent memory leaks.
+  // Prototype function
+  // You don't need to change something below:
+  // A really lightweight plugin wrapper around the constructor,
+  // preventing against multiple instantiations and allowing any
+  // public function (ie. a function whose name doesn't start
+  // with an underscore) to be called via the jQuery plugin,
+  // e.g. $(element).defaultPluginName('functionName', arg1, arg2)
+  $.fn[pluginName] = function(options) {
+    var args = arguments;
 
-         More: http://api.jquery.com/jquery.data/
-         */
-        $.data(this, 'plugin_' + pluginName, new Plugin(this, options));
-      }
-    });
-    /*
-     "return this;" returns the original jQuery object. This allows
-     additional jQuery methods to be chained.
-     */
-    return this;
+    // Is the first parameter an object (options), or was omitted,
+    // instantiate a new instance of the plugin.
+    if (options === undefined || typeof options === 'object') {
+      return this.each(function() {
+
+        // Only allow the plugin to be instantiated once,
+        // so we check that the element has no plugin instantiation yet
+        if (!$.data(this, 'plugin_' + pluginName)) {
+
+          // if it has no instance, create a new one,
+          // pass options to our plugin constructor,
+          // and store the plugin instance
+          // in the elements jQuery data object.
+          $.data(this, 'plugin_' + pluginName, new Plugin(this, options));
+        }
+      });
+
+      // If the first parameter is a string and it doesn't start
+      // with an underscore or "contains" the `init`-function,
+      // treat this as a call to a public method.
+    } else if (typeof options === 'string' && options[0] !== '_' && options !== 'init') {
+
+      // Cache the method call
+      // to make it possible
+      // to return a value
+      var returns;
+
+      this.each(function() {
+        var instance = $.data(this, 'plugin_' + pluginName);
+
+        // Tests that there's already a plugin-instance
+        // and checks that the requested public method exists
+        if (instance instanceof Plugin && typeof instance[options] === 'function') {
+
+          // Call the method of our plugin instance,
+          // and pass it the supplied arguments.
+          returns = instance[options].apply(instance, Array.prototype.slice.call(args, 1));
+        }
+
+        // Allow instances to be destroyed via the 'destroy' method
+        if (options === 'destroy') {
+          $.data(this, 'plugin_' + pluginName, null);
+        }
+      });
+
+      // If the earlier cached method
+      // gives a value back return the value,
+      // otherwise return this to preserve chainability.
+      return returns !== undefined ? returns : this;
+    }
   };
 
   /*
